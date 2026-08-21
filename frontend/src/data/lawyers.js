@@ -1,0 +1,42 @@
+export const lawyers = [
+  {
+    id: 1,
+    name: "Kwame Barima",
+    title: "Managing Partner",
+    specialization: "Corporate Law",
+    yearsExperience: 20,
+    bio: "Twenty years advising founders and boards through mergers, financing, and governance.",
+    profileImageUrl:
+      "https://res.cloudinary.com/bafanaatlaw/image/upload/v1786917868/WhatsApp_Image_2026-08-16_at_9.55.20_PM_haom64.jpg",
+  },
+  {
+    id: 2,
+    name: "Akosua Mensah",
+    title: "Senior Associate",
+    specialization: "Family Law",
+    yearsExperience: 8,
+    bio: "Guides families through divorce and custody with clarity, care, and firm advocacy.",
+    profileImage: null,
+    profileImageUrl: "https://via.placeholder.com/400x500?text=Akosua+Mensah",
+  },
+  {
+    id: 3,
+    name: "Kofi Agyeman",
+    title: "Partner",
+    specialization: "Civil Litigation",
+    yearsExperience: 12,
+    bio: "A trial lawyer's trial lawyer — measured in negotiation, formidable in court.",
+    profileImage: null,
+    profileImageUrl: "https://via.placeholder.com/400x500?text=Kofi+Agyeman",
+  },
+  {
+    id: 4,
+    name: "Ama Adiko",
+    title: "Associate",
+    specialization: "Real Estate",
+    yearsExperience: 6,
+    bio: "Handles transactions and property disputes with sharp attention to detail.",
+    profileImage: null,
+    profileImageUrl: "https://via.placeholder.com/400x500?text=Ama+Adiko",
+  },
+];

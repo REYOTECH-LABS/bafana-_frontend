@@ -1,0 +1,14 @@
+# Bafana@Law
+#
+# The administrator portal is an internal system and should not appear in
+# search results. This is a crawler courtesy, not a security control — the URLs
+# remain reachable by anyone who types them, and what actually protects the data
+# is that every administrator API endpoint enforces authentication and
+# permissions server-side.
+
+User-agent: *
+Disallow: /admin
+Disallow: /admin/
+
+# Public pages are welcome.
+Allow: /
