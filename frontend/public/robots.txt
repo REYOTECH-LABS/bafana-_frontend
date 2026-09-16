@@ -12,3 +12,5 @@ Disallow: /admin/
 
 # Public pages are welcome.
 Allow: /
+
+Sitemap: https://www.bafanaatlaw.com/sitemap.xml

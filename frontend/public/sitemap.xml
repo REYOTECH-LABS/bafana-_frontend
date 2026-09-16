@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Bafana@Law public sitemap.
+
+  Only the public routes declared under MainLayout in src/routes/AppRoutes.jsx.
+  The administrator portal is deliberately absent: those routes are behind
+  authentication and are already disallowed in robots.txt.
+
+  /blog/:slug is not listed. Posts are fetched from the API at runtime, so
+  their URLs cannot be enumerated in a static file; /blog is the crawl entry
+  point for them.
+
+  No <lastmod>: a hand-maintained date goes stale silently, which is worse
+  than omitting it.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.bafanaatlaw.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.bafanaatlaw.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.bafanaatlaw.com/practice-areas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bafanaatlaw.com/lawyers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.bafanaatlaw.com/testimonials</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.bafanaatlaw.com/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.bafanaatlaw.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.bafanaatlaw.com/book-appointment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>
