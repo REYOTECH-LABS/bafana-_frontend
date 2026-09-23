@@ -15,8 +15,10 @@ export const About = () => {
       <Philosophy />
       <CompanyValues />
       <VisionMission />
-      <OfficeLocation />
+      {/* Reasons come before the office, so the page closes on an invitation:
+          where to find us, then how to book. */}
       <WhyChooseBafana />
+      <OfficeLocation />
       <AboutCTA />
     </main>
   );

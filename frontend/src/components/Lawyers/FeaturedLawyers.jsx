@@ -1,71 +1,48 @@
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { FaArrowRight } from 'react-icons/fa';
-import { SectionHeading } from '../common/SectionHeading';
-import { Button } from '../common/Button';
-import { LawyerCard } from './LawyerCard';
+import { Eyebrow, ActionLink } from '../About/ui';
 import { Reveal } from '../../animations/Reveal';
-import { LoadingState, ErrorState } from '../common/States';
-import { useApi } from '../../hooks/useApi';
-import { getLawyers } from '../../services/resources';
-import { staggerContainer } from '../../animations/variants';
-import { lawyers as staticLawyers } from '../../data/lawyers';
+import groupLawyersImg from '../../../images/group_lawyers.png';
 
-
+/**
+ * Home — our team.
+ *
+ * A charcoal band with the team photograph bleeding off the right edge. It
+ * introduces the people and hands off to the Our Lawyers page, where the
+ * individual profiles live — no individual lawyer is named or pictured here.
+ */
 export const FeaturedLawyers = () => {
-  // The homepage shows a preview, so it asks for four. The static module is the
-  // fallback: a marketing page should degrade to slightly stale content rather
-  // than a blank section if the API is briefly unreachable.
-  const { data, loading, error, refetch } = useApi(() => getLawyers({ limit: 4 }), [], {
-    fallback: staticLawyers,
-  });
-
-  const lawyers = data?.length ? data : staticLawyers;
-
   return (
-    <section className="section-padding bg-gray-50">
-      <div className="container-custom">
-        <SectionHeading
-          pretitle="Our Team"
-          title="Experienced. Respected. Trusted."
-          description="Meet the advocates who will stand beside you."
+    <section className="relative overflow-hidden bg-charcoal text-white">
+      {/* Photograph: right half on desktop, full-width panel above the copy on
+          smaller screens. */}
+      <div className="relative lg:absolute lg:inset-y-0 lg:right-0 lg:w-[58%] aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">
+        <img
+          src={groupLawyersImg}
+          alt="The legal team standing together in the firm's reception"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_30%]"
         />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent lg:bg-gradient-to-r lg:from-charcoal lg:via-charcoal/30 lg:to-transparent"
+        />
+      </div>
 
-        {/* Grid */}
-        {loading ? (
-          <div className="mb-12">
-            <LoadingState count={4} columns="md:grid-cols-2 lg:grid-cols-4" label="Loading lawyers" />
-          </div>
-        ) : error && !lawyers.length ? (
-          <ErrorState error={error} onRetry={refetch} className="mb-12" />
-        ) : (
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
-            variants={staggerContainer()}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
-          >
-            {lawyers.map(lawyer => (
-              <LawyerCard
-                key={lawyer.id}
-                name={lawyer.name}
-                title={lawyer.title}
-                specialization={lawyer.specialization}
-                bio={lawyer.bio}
-                profileImage={lawyer.profileImageUrl}
-              />
-            ))}
-          </motion.div>
-        )}
-
-        {/* CTA */}
-        <Reveal className="text-center">
-          <Link to="/lawyers">
-            <Button variant="primary" size="md">
-              Meet all our lawyers <FaArrowRight />
-            </Button>
-          </Link>
+      <div className="container-custom relative">
+        <Reveal className="max-w-md py-14 md:py-20 lg:py-32">
+          <Eyebrow tone="light">Our Team</Eyebrow>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-[1.05] tracking-tight mb-6">
+            Experienced.
+            <br />
+            Respected.
+            <br />
+            <span className="text-gold-400">Trusted.</span>
+          </h2>
+          <p className="text-lg text-white/75 leading-relaxed mb-10">
+            Meet the advocates who will stand beside you.
+          </p>
+          <ActionLink to="/lawyers" variant="gold">
+            Meet all our lawyers
+          </ActionLink>
         </Reveal>
       </div>
     </section>

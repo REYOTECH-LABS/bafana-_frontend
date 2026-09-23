@@ -1,10 +1,15 @@
-import { SectionHeading } from '../../components/common/SectionHeading';
-import { ContactForm } from '../../components/Contact/ContactForm';
+import { ContactHero } from '../../components/Contact/ContactHero';
+import { ContactOptions } from '../../components/Contact/ContactOptions';
+import { ContactFormSection } from '../../components/Contact/ContactFormSection';
+import { QuickAnswers } from '../../components/Contact/QuickAnswers';
+import { ContactCTA } from '../../components/Contact/ContactCTA';
 import { OfficeLocation } from '../../components/About/OfficeLocation';
-import { Reveal } from '../../animations/Reveal';
 
 /**
  * Contact page.
+ *
+ * Hero on the firm's building → the four ways to reach us → the enquiry form
+ * → office details and map → quick answers → booking prompt.
  *
  * The office details and map are the same `OfficeLocation` component the About
  * page uses — it already reads from contactInfo, so both pages stay in step and
@@ -13,21 +18,16 @@ import { Reveal } from '../../animations/Reveal';
 export const Contact = () => {
   return (
     <main>
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom">
-          <SectionHeading
-            pretitle="Contact us"
-            title="Let's talk about your matter."
-            description="Send us a message and a member of our team will respond shortly. Everything you share is treated in confidence."
-          />
-
-          <Reveal className="max-w-3xl mx-auto">
-            <ContactForm />
-          </Reveal>
-        </div>
-      </section>
-
-      <OfficeLocation />
+      <ContactHero />
+      <ContactOptions />
+      <ContactFormSection />
+      {/* Anchor target for "See the map" and the quick answers. scroll-mt
+          clears the sticky navbar. */}
+      <div id="visit-our-office" className="scroll-mt-20">
+        <OfficeLocation />
+      </div>
+      <QuickAnswers />
+      <ContactCTA />
     </main>
   );
 };

@@ -66,12 +66,12 @@ export const ContactForm = () => {
   if (status === 'success') {
     return (
       <div
-        className="bg-white rounded-xl border border-gray-200 p-10 text-center"
+        className="bg-white border border-ivory-200 border-t-2 border-t-gold-500 p-10 text-center"
         role="status"
         aria-live="polite"
       >
-        <FaCheckCircle aria-hidden="true" className="text-3xl text-black mb-5 mx-auto" />
-        <h3 className="text-2xl font-serif font-bold text-black mb-3">Message received</h3>
+        <FaCheckCircle aria-hidden="true" className="text-3xl text-gold-600 mb-5 mx-auto" />
+        <h3 className="text-2xl font-serif font-bold text-charcoal mb-3">Message received</h3>
         <p className="text-gray-600 mb-8">
           Thank you for getting in touch. A member of our team will respond shortly.
         </p>
@@ -86,7 +86,7 @@ export const ContactForm = () => {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="bg-white rounded-xl border border-gray-200 p-8 md:p-10"
+      className="bg-white border border-ivory-200 border-t-2 border-t-gold-500 p-6 sm:p-8 md:p-10 shadow-[0_30px_60px_-35px_rgba(20,20,20,0.25)]"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <Field
@@ -154,7 +154,13 @@ export const ContactForm = () => {
         </p>
       )}
 
-      <Button variant="primary" size="md" type="submit" disabled={status === 'submitting'}>
+      <Button
+        variant="primary"
+        size="md"
+        type="submit"
+        disabled={status === 'submitting'}
+        className="w-full sm:w-auto disabled:opacity-60 disabled:cursor-wait"
+      >
         {status === 'submitting' ? 'Sending…' : 'Send message'}
         {status !== 'submitting' && <FaArrowRight className="text-sm" />}
       </Button>

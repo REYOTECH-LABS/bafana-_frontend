@@ -6,11 +6,10 @@ import {
   FaClock,
   FaArrowRight,
 } from 'react-icons/fa';
-import { SectionHeading } from '../common/SectionHeading';
-import { Button } from '../common/Button';
 import { LocationMap } from '../common/LocationMap';
 import { Reveal } from '../../animations/Reveal';
-import { cardHover, fadeUp, staggerContainer } from '../../animations/variants';
+import { fadeUp, staggerContainer } from '../../animations/variants';
+import { Eyebrow, ActionLink } from './ui';
 import { officeLocation } from '../../data/about';
 import { contactInfo, buildDirectionsUrl } from '../../data/contactInfo';
 
@@ -38,7 +37,7 @@ const details = [
           <a
             key={number}
             href={`tel:${number.replace(/[^\d+]/g, '')}`}
-            className="hover:text-black transition-colors"
+            className="hover:text-gold-600 transition-colors"
           >
             {number}
           </a>
@@ -51,7 +50,7 @@ const details = [
     label: 'Email',
     icon: FaEnvelope,
     content: (
-      <a href={`mailto:${contactInfo.email}`} className="hover:text-black transition-colors">
+      <a href={`mailto:${contactInfo.email}`} className="hover:text-gold-600 transition-colors">
         {contactInfo.email}
       </a>
     ),
@@ -63,7 +62,7 @@ const details = [
     content: (
       <span className="flex flex-col gap-1">
         <span>{contactInfo.businessHours.weekday}</span>
-        <span className="text-gray-500">{contactInfo.businessHours.weekend}</span>
+        <span className="text-gray-600">{contactInfo.businessHours.weekend}</span>
       </span>
     ),
   },
@@ -75,59 +74,62 @@ export const OfficeLocation = () => {
   const directionsUrl = buildDirectionsUrl();
 
   return (
-    <section className="section-padding">
+    <section className="bg-ivory section-padding">
       <div className="container-custom">
-        {/* Heading and the directions action share a row on desktop and stack on
-            mobile, so the button never crowds the title. */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-20">
-          <SectionHeading
-            pretitle={officeLocation.pretitle}
-            title={officeLocation.title}
-            centered={false}
-            className="mb-0 md:mb-0"
-          />
-          <Reveal delay={0.1} className="flex-shrink-0">
-            <a
-              href={directionsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${officeLocation.directionsCta} to Bafana@Law, ${contactInfo.address} (opens Google Maps in a new tab)`}
+        {/* Contact column beside the map. The map is the visual anchor, so it
+            takes the wider column and runs the full height of the details. */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
+          <div className="lg:col-span-5 flex flex-col">
+            <Reveal>
+              <Eyebrow>{officeLocation.pretitle}</Eyebrow>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-charcoal leading-[1.08] tracking-tight mb-10">
+                {officeLocation.title}
+              </h2>
+            </Reveal>
+
+            <motion.dl
+              className="border-t border-ivory-200"
+              variants={staggerContainer(0.08)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.15 }}
             >
-              <Button variant="secondary" size="md">
+              {details.map(({ id, label, icon: Icon, content }) => (
+                <motion.div
+                  key={id}
+                  variants={fadeUp}
+                  className="group grid grid-cols-[auto_1fr] gap-5 py-6 border-b border-ivory-200"
+                >
+                  <span className="w-11 h-11 flex items-center justify-center bg-white border border-ivory-200 text-gold-600 transition-colors duration-300 group-hover:bg-charcoal group-hover:border-charcoal group-hover:text-gold-400">
+                    <Icon aria-hidden="true" className="text-sm" />
+                  </span>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-600 mb-1.5">
+                      {label}
+                    </dt>
+                    <dd className="text-base text-charcoal leading-relaxed break-words">{content}</dd>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.dl>
+
+            <Reveal delay={0.1} className="mt-10">
+              <ActionLink
+                href={directionsUrl}
+                variant="dark"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${officeLocation.directionsCta} to Bafana@Law, ${contactInfo.address} (opens Google Maps in a new tab)`}
+              >
                 {officeLocation.directionsCta}
-                <FaArrowRight className="text-sm" />
-              </Button>
-            </a>
-          </Reveal>
+              </ActionLink>
+            </Reveal>
+          </div>
+
+          <div className="lg:col-span-7">
+            <OfficeMap />
+          </div>
         </div>
-
-        {/* Detail cards */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10"
-          variants={staggerContainer()}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-        >
-          {details.map(({ id, label, icon: Icon, content }) => (
-            <motion.div
-              key={id}
-              variants={fadeUp}
-              whileHover={cardHover}
-              className="h-full bg-white p-8 rounded-xl border border-gray-200 hover:border-gray-900 transition-colors duration-300"
-            >
-              <div className="w-11 h-11 mb-6 flex items-center justify-center rounded-lg border border-gray-200 bg-gray-50">
-                <Icon aria-hidden="true" className="text-base text-black" />
-              </div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
-                {label}
-              </p>
-              <div className="text-gray-700 leading-relaxed">{content}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <OfficeMap />
       </div>
     </section>
   );
@@ -150,17 +152,17 @@ export const OfficeLocation = () => {
  * a scaling ancestor leaves the map convinced it is the wrong size and paints
  * grey gaps where tiles belong.
  */
-const OfficeMap = () => {
+export const OfficeMap = () => {
   return (
-    <Reveal variant="fadeIn">
-      <div className="relative isolate w-full h-[20rem] md:h-[26rem] rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+    <Reveal variant="fadeIn" className="h-full">
+      <div className="relative isolate w-full h-[22rem] md:h-[28rem] lg:h-full lg:min-h-[34rem] overflow-hidden border border-ivory-200 bg-gray-100 shadow-[0_30px_60px_-30px_rgba(20,20,20,0.25)]">
         <LocationMap />
 
         {/* Address card, floated over the map's lower-left corner. Raised above
             Leaflet's panes, and lifted clear of the attribution strip on mobile
             where the card spans the full width. */}
         <div className="absolute left-4 bottom-9 right-4 sm:bottom-4 sm:right-auto sm:max-w-sm z-[1000] bg-white rounded-lg border border-gray-200 shadow-lg p-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-600 mb-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-600 mb-2">
             Bafana@Law
           </p>
           <p className="text-sm text-gray-700 leading-relaxed">{contactInfo.address}</p>

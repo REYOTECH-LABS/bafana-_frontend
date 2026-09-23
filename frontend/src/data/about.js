@@ -28,6 +28,8 @@ import {
 export const aboutHero = {
   pretitle: 'About the company',
   title: 'About Bafana@Law',
+  // The part of the title set in the gold accent.
+  titleAccent: 'Bafana@Law',
   description:
     'Bafana@Law is a dynamic, client-focused law firm dedicated to providing exceptional legal services to individuals, businesses, investors, and institutions. Built on integrity, professionalism, excellence, and results, we deliver practical legal solutions that meet the evolving needs of our clients.',
   primaryCta: { label: 'Book a consultation', to: '/book-appointment' },

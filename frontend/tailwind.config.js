@@ -58,6 +58,19 @@ export default {
           dangerBg: '#FEF2F2',  dangerFg: '#B91C1C',
           infoBg: '#F0F4F8',    infoFg: '#3B5266',
         },
+        /*
+         * About page editorial palette. Warm paper and deep charcoal to sit
+         * beside the existing gold accent. Additive tokens — nothing outside
+         * the About page references them.
+         */
+        ivory: {
+          DEFAULT: '#F7F4EE',
+          200: '#EDE7DB',   // hairlines on ivory
+        },
+        charcoal: {
+          DEFAULT: '#141414',
+          800: '#1C1C1C',   // raised panels on charcoal
+        },
         gold: {
           300: '#E8C88A',
           400: '#DCB26A',

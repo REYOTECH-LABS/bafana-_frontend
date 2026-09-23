@@ -1,73 +1,78 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaArrowRight, FaPlay } from 'react-icons/fa';
-import { Button } from '../common/Button';
-import { Image } from '../common/Image';
+import { FaArrowDown } from 'react-icons/fa';
+import { Eyebrow, ActionLink } from './ui';
 import { fadeUp, imageReveal, staggerContainer } from '../../animations/variants';
 import { aboutHero } from '../../data/about';
-import lawOfficeImg from '../../../images/law_office.png';
+import { contactInfo } from '../../data/contactInfo';
+import receptionImg from '../../../images/login_background.png';
+import bafanaLogo from '../../../images/bafana_logo.jpeg';
 
 /**
  * About page hero.
  *
- * Mirrors the home hero's construction so the two pages feel like one site:
- * same stagger-on-load (it is above the fold, so scroll triggers would never
- * fire), same rule-and-eyebrow label, same asymmetric column split.
+ * Dark editorial split: copy on charcoal to the left, the firm's own branded
+ * reception on the right. The photograph carries the Bafana@Law signage, so
+ * the page establishes who the firm is before a word is read.
+ *
+ * Animates on load rather than on scroll — it is above the fold.
  */
 export const AboutHero = () => {
+  const { title, titleAccent } = aboutHero;
+  const lead = title.replace(titleAccent, '').trim();
+
   return (
-    <section className="relative overflow-hidden bg-gray-50 py-20 md:py-28 lg:py-32">
-      <div className="container-custom">
+    <section className="relative overflow-hidden bg-charcoal text-white">
+      {/* Warm light bleeding in from the image side, so the two halves read as
+          one space rather than a photo pasted onto a black slab. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_30%,rgba(201,151,74,0.16),transparent_60%)]"
+      />
+
+      <div className="container-custom relative pt-14 pb-20 md:pt-20 md:pb-28 lg:py-28">
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-16 items-center"
           variants={staggerContainer(0.13, 0.1)}
           initial="hidden"
           animate="visible"
         >
           {/* Copy */}
-          <div className="lg:col-span-6">
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
-              <span aria-hidden="true" className="h-px w-10 bg-gray-400 flex-shrink-0" />
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-600">
-                {aboutHero.pretitle}
-              </p>
+          <div className="lg:col-span-6 order-1">
+            <motion.div variants={fadeUp}>
+              <Eyebrow tone="light">{aboutHero.pretitle}</Eyebrow>
             </motion.div>
 
             <motion.h1
               variants={fadeUp}
-              className="text-5xl md:text-6xl font-serif font-bold text-black mb-8 leading-[1.05] tracking-tight"
+              className="text-5xl sm:text-6xl lg:text-7xl font-serif font-bold leading-[1.02] tracking-tight mb-8"
             >
-              {aboutHero.title}
+              <span className="block text-white">{lead}</span>
+              <span className="block text-gold-400">{titleAccent}</span>
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
-              className="text-lg text-gray-600 mb-10 leading-relaxed max-w-xl"
+              className="text-lg md:text-xl text-white/75 leading-relaxed max-w-xl mb-10"
             >
               {aboutHero.description}
             </motion.p>
 
-            {/* Dual CTA: a solid primary action beside a quieter inline link,
-                exactly the pairing the prototype uses. */}
             <motion.div
               variants={fadeUp}
-              className="flex flex-col sm:flex-row sm:items-center gap-5"
+              className="flex flex-col sm:flex-row sm:items-center gap-6"
             >
-              <Link to={aboutHero.primaryCta.to}>
-                <Button variant="primary" size="md">
-                  {aboutHero.primaryCta.label}
-                  <FaArrowRight className="text-sm" />
-                </Button>
-              </Link>
+              <ActionLink to={aboutHero.primaryCta.to} variant="gold">
+                {aboutHero.primaryCta.label}
+              </ActionLink>
 
               <a
                 href={aboutHero.secondaryCta.href}
-                className="group inline-flex items-center gap-3 text-black font-semibold"
+                className="group inline-flex items-center gap-3 font-semibold text-white/90 hover:text-white"
               >
-                <span className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center transition-colors duration-300 group-hover:border-black group-hover:bg-black">
-                  <FaPlay
+                <span className="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center transition-colors duration-300 group-hover:border-gold-400 group-hover:bg-gold-500">
+                  <FaArrowDown
                     aria-hidden="true"
-                    className="text-[0.6rem] text-black ml-0.5 transition-colors duration-300 group-hover:text-white"
+                    className="text-xs transition-transform duration-300 group-hover:translate-y-0.5 group-hover:text-charcoal"
                   />
                 </span>
                 {aboutHero.secondaryCta.label}
@@ -76,13 +81,42 @@ export const AboutHero = () => {
           </div>
 
           {/* Image */}
-          <motion.div variants={imageReveal} className="lg:col-span-6">
-            <Image
-              src={lawOfficeImg}
-              alt="Scales of justice, law books and a gavel in the Bafana@Law office"
-              height="h-[22rem] md:h-[30rem] lg:h-[34rem]"
-              placeholderLabel="Law office"
-            />
+          <motion.div variants={imageReveal} className="lg:col-span-6 order-2">
+            <div className="relative mx-auto max-w-xl lg:max-w-none">
+              {/* Offset gold frame behind the photograph. */}
+              <span
+                aria-hidden="true"
+                className="hidden sm:block absolute -top-5 -right-5 w-full h-full border border-gold-500/50"
+              />
+
+              <div className="relative overflow-hidden aspect-[4/3] sm:aspect-[5/4] lg:aspect-[4/5] bg-charcoal-800">
+                <img
+                  src={receptionImg}
+                  alt="The Bafana@Law reception, with the firm's name on the feature wall"
+                  className="w-full h-full object-cover object-[25%_38%]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent"
+                />
+              </div>
+
+              {/* Brand plaque */}
+              <div className="absolute -bottom-8 left-4 sm:left-8 flex items-center gap-4 bg-ivory text-charcoal pl-3 pr-6 py-3 shadow-2xl shadow-black/40">
+                <img
+                  src={bafanaLogo}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-12 h-12 object-contain mix-blend-multiply"
+                />
+                <div>
+                  <p className="font-serif font-bold text-base leading-tight">Bafana@Law</p>
+                  <p className="text-xs md:text-sm text-gray-600 leading-snug">
+                    {contactInfo.mapLocation}
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </div>
